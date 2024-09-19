@@ -21,6 +21,10 @@ public class PlayerController : MonoBehaviour
     // Movement along the X and Y axes 
     private float movementX;
     private float movementY;
+
+    public AudioClip pickupSound;
+    public AudioClip victorySound;
+    private AudioSource audioSource;
     
     // Start is called before the first frame update
     void Start()
@@ -30,6 +34,8 @@ public class PlayerController : MonoBehaviour
         count = 0;
         SetCountText();
         winTextObject.SetActive(false);
+
+        audioSource = GetComponent<AudioSource>();
         
         
     }
@@ -47,6 +53,11 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
             count =  count + 1;
             SetCountText();
+
+            if (pickupSound != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(pickupSound);
+            }
         }
     }
 
@@ -68,6 +79,12 @@ public class PlayerController : MonoBehaviour
         if (count >= 11)
         {
             winTextObject.SetActive(true);
+
+            if (victorySound != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(victorySound);
+            }
+
         }
 
        
